@@ -10,17 +10,16 @@
 #include <vector>
 
 
-class Train {
-
+class Train 
+{
 public:
-	Train(Road* road, float speed, vector<int> Cart_types);
-	void Update();
-	NodePtr GetNodeForCamera() ;
-	void SpeedAdd(float value_for_the_sum_to_the_speed);
-	float GetSpeed() const;
+	Train(std::shared_ptr<Road> road, float speed, std::vector<CartType> const& Cart_types);
+	void update();
+	Unigine::NodePtr getNodeForCamera() ;
+	void speedAdd(float value_for_the_sum_to_the_speed);
+	float getSpeed() const;
 
 private:
 	float m_speed = 0; 
-	Vector<Cart> m_Carts;
-	Road* m_road;
+	Unigine::Vector<Cart> m_Carts;
 };

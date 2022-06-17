@@ -22,7 +22,7 @@ GPU 3		: Microsoft Basic Render Driver 8191 MB
 OS:		Windows 10 (build 22000) 64-bit
 
 CPU:	Intel(R) Xeon(R) CPU E5-2640 0 @ 2.50GHz
-		Frequency: 2492MHz
+		Frequency: 2493MHz
 		Extensions:  MMX SSE SSE2 SSE3 SSSE3 SSE41 SSE42 AVX HTT
 		Cores:8 Threads:8
 
@@ -38,13 +38,13 @@ GPU:	NVIDIA GRID K280Q
 Loading "FbxImporter_x64.dll"...
 Loading "GLTFImporter_x64.dll"...
 Loading "FbxExporter_x64.dll"...
-Plugins initialization: 141ms
+Plugins initialization: 144ms
 
 
 ---- Application ----
 Loading "dxgi.dll"...
 Loading "openal32.dll"...
-Application initialization: 492ms
+Application initialization: 718ms
 
 
 
@@ -70,8 +70,8 @@ Data path: E:/unigine_project/unigine_project/data/
 Save path: E:/unigine_project/unigine_project/bin/
 WARNING:	FileSystemCore::mount_file(): can't mount "test/NodeDummy_1.node" file, because of GUID collision
 
-Runtimes loaded: 6 3ms
-Filesystem initialization: 5896ms
+Runtimes loaded: 6 30ms
+Filesystem initialization: 6780ms
 
 ---- Sound ----
 Renderer: OpenAL Soft on Удаленное аудио
@@ -114,9 +114,9 @@ ERROR:		"Rels_Strelka/_Materials/Rels.mat" can't find material : 72bf28722d636d2
 ERROR:		"Rels_Strelka/_Materials/Shpala_Concrete/ShpalaConcrete_LOD0.mat" can't find material : 863ea5f9390f970417c93693f1c04ad66fea043d
 ERROR:		"Rels_Strelka/_Materials/Shpala_Concrete_LOD1/Shpala_LOD1.mat" can't find material : 863ea5f9390f970417c93693f1c04ad66fea043d
 ERROR:		"Rels_Strelka/_Materials/Shpala_Wood/ShpalaWood_LOD0.mat" can't find material : 863ea5f9390f970417c93693f1c04ad66fea043d
-Engine base materials loaded: 192 / 192 (372ms)
-Engine materials loaded:      70 / 70 (28ms)
-User materials loaded:        433 / 434 (364ms)
+Engine base materials loaded: 192 / 192 (379ms)
+Engine materials loaded:      70 / 70 (26ms)
+User materials loaded:        433 / 434 (2758ms)
 Total materials: 695
 
 
@@ -135,10 +135,10 @@ Processor registered "CreateUV".
 Processor registered "CloseAnimation".
 Importer registered "GLTFImporter".
 Exporter registered "FbxExporter".
-Engine initialization: 10611ms
+Engine initialization: 13648ms
 
 
-Script loading "editor2/editor.usc" 122ms
+Script loading "editor2/editor.usc" 142ms
 ---- Editor ----
 Version: 2.13.0.0 ver-2.13.0.0-27a5e15 Dec 15 2020
 Binary: Windows MSVC 19.0.24215.1 
@@ -157,11 +157,33 @@ Editor.PluginSystem: Plugin search paths:  QVector("E:/unigine_project/unigine_p
 Version: 2.90
 
 Unigine~# config_autosave 1 && world_load "unigine_project"
-Script loading "core/unigine.usc" 33ms
-Loading "core/locale/unigine.locale" dictionary 0ms
-World loading "unigine_project.world" 350ms
+Script loading "core/unigine.usc" 44ms
+Loading "core/locale/unigine.locale" dictionary 1ms
+World loading "unigine_project.world" 469ms
 
 ---- Load cache textures ----
-Cache textures loaded 311 (78ms)
+Cache textures loaded 311 (707ms)
 
+WARNING:	Node Bogie (1238180060) has lost its referenced asset.
+Unigine~# world_save
+Saving "unigine_project.world"
+E:/unigine_project/unigine_project/data/box_8.mesh (857B): import started...
+E:/unigine_project/unigine_project/data/box_8.mesh: import finished in 0.731000 ms
+Reloading "box_8.mesh" mesh
+Reloading "box_8.mesh" mesh
+ERROR:	Mesh::info(): unknown format of "guid://a314662b9f60458e7ae70f950fed1bf03f0afe8f" file
+Reloading "guid://a314662b9f60458e7ae70f950fed1bf03f0afe8f" mesh
+ERROR:	Mesh::info(): unknown format of "guid://a314662b9f60458e7ae70f950fed1bf03f0afe8f" file
+E:/unigine_project/unigine_project/data/box_8.mesh (857B): import started...
+E:/unigine_project/unigine_project/data/box_8.mesh: import finished in 0.083000 ms
+Reloading "box_8.mesh" mesh
+Reloading "box_8.mesh" mesh
+E:/unigine_project/unigine_project/data/cylinder_1.mesh (8.1KB): import started...
+E:/unigine_project/unigine_project/data/cylinder_1.mesh: import finished in 0.092000 ms
+Reloading "cylinder_1.mesh" mesh
+Reloading "cylinder_1.mesh" mesh
+Unigine~# world_save
+Saving "unigine_project.world"
+Unigine~# world_save
+Saving "unigine_project.world"
 WARNING:	unknown tool window

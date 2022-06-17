@@ -47,7 +47,7 @@ public:
 	int restore(const Unigine::StreamPtr &stream) override;
 
 private:
-	vector<Road> m_roads;
+	std::vector<std::shared_ptr<Road>> m_roads;
 	Unigine::ControlsPtr m_controls;
 	Unigine::PlayerPtr m_camera_actor;
 	Unigine::PlayerDummyPtr m_CameraPlayer_Train;

@@ -44,28 +44,20 @@ int AppWorldLogic::init()
 	WorldSplineGraphPlayer->load("1.spl");
 	WorldSplineGraphNPC->load("1.spl");
 	WorldSplineGraphNPC->setWorldPosition(vec3(25.53255, 0, 0));
-	m_roads.push_back(Road(WorldSplineGraphPlayer));
-	m_roads.push_back(Road(WorldSplineGraphNPC));
+	
+	m_roads.push_back(make_shared<Road>(Road(WorldSplineGraphPlayer)));
+	m_roads.push_back((make_shared<Road>(WorldSplineGraphNPC)));;
+	
+	std::shared_ptr<Road> sss = m_roads[0];
 
+	vector<CartType> carts_types_NPC;
 
-	random_device rd;   
-	mt19937 gen(rd());  
-	uniform_int_distribution<> dist(0, 1);
-
-	vector<int> carts_types_NPC;
-	vector<int> carts_types_Player;
-	for (int i = 0; i < 3; i++)
-	{
-		carts_types_NPC.push_back(dist(gen));
-	}
-	for (int i = 0; i < 3; i++)
-	{
-		carts_types_Player.push_back(dist(gen));
-	}
-
-	m_TrainPlayer = make_unique<Train> (Train(&m_roads[0], 5, carts_types_Player));
-	m_TrainNPC = make_unique<Train> (Train(&m_roads[1], 5, carts_types_NPC));
-	m_TrainPlayer->GetNodeForCamera()->addChild(m_CameraPlayer_Train);
+	carts_types_NPC.push_back(CartType::Barrel);
+	carts_types_NPC.push_back(CartType::Van);
+	carts_types_NPC.push_back(CartType::Barrel);
+	m_TrainPlayer = make_unique<Train> (Train((m_roads[0]), 5, carts_types_NPC));
+	m_TrainNPC = make_unique<Train> ((m_roads[1]), 5, carts_types_NPC);
+	m_TrainPlayer->getNodeForCamera()->addChild(m_CameraPlayer_Train);
 	m_CameraPlayer_Train->setPosition(Vec3(0, 0, 3));
 	m_CameraPlayer_Train->rotate(90, 180, 0);
 	return 1;
@@ -77,11 +69,8 @@ int AppWorldLogic::init()
 
 int AppWorldLogic::update()
 {
-
-	m_TrainPlayer->Update();
-	m_TrainNPC->Update();
-	
-	
+	m_TrainPlayer->update();
+	m_TrainNPC->update();
 
 	if (Input::isKeyPressed(Input::KEY_R))
 	{
@@ -90,11 +79,11 @@ int AppWorldLogic::update()
 	}
 	if (Input::isKeyPressed(Input::KEY_UP))
 	{
-		m_TrainPlayer->SpeedAdd(0.0005);
+		m_TrainPlayer->speedAdd(0.0005);
 	}
 	if (Input::isKeyPressed(Input::KEY_DOWN))
 	{
-		m_TrainPlayer->SpeedAdd(-0.0005);
+		m_TrainPlayer->speedAdd(-0.0005);
 
 
 	}
@@ -108,7 +97,6 @@ int AppWorldLogic::update()
 	{
 		Game::setPlayer(m_camera_actor);
 	}
-	
 	return 1;
 }
 int AppWorldLogic::postUpdate()

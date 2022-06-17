@@ -1,5 +1,5 @@
 #include "Bogie.h"
-
+#include "CartType.h"
 
 #include <UnigineLogic.h>
 #include <UnigineStreams.h>
@@ -11,24 +11,26 @@
 #include <vector>
 #include <memory>
 
-class Cart {
+class Cart
+{
 public:
-	Cart(Unigine::NodePtr bogie_Front, Unigine::NodePtr bogie_BACK, Unigine::NodePtr Upper,
-		Road* road, float speed, int position);
-	int Update();
-	int Update(Math::vec3 pos, float distance);
-	NodePtr GetNodeForCamera() const;
-	void SpeedAdd(float speedadding);
-	float GetSpeed() const;
+	Cart(Unigine::NodePtr const& bogie_Front, Unigine::NodePtr const& bogie_BACK, 
+		Unigine::NodePtr Upper, std::shared_ptr<Road> road, float speed, int position);
+	int update();
+	int update(Unigine::Math::vec3 const& pos, float distance);
+	Unigine::NodePtr const& getNodeForCamera() const;
+	void speedAdd(float speedAdding);
+	float getSpeed() const;
 	bool isEndRoads();
-	vec3 GetFrontBogie();
+	Unigine::Math::vec3 const& getFrontBogie();
 	
 private:
+	float space(Unigine::Math::vec3 const& pointOne, Unigine::Math::vec3 const& pointTwo); //calculates the distance between points on the XY axis
+	Unigine::Math::vec3 centerPoint(Unigine::Math::vec3 point1,
+		Unigine::Math::vec3 point2); //calculates the centerPoint between points on the XY axis
+	float getAngleBetweenBogies(Unigine::Math::vec3 front, Unigine::Math::vec3 back); //calculates the Angle between points on the XY axis
 	float m_speed = 0;
-	std::shared_ptr<Bogie> m_bogie_front;
-	std::shared_ptr<Bogie> m_bogie_back;
-	Unigine::NodePtr m_Upper;
-	float space(Vec3 old_point, Vec3 new_point);
-	Vec3 centerPoint(Vec3 point1, Vec3 point2);
-	float getAngleBetweenBogies(Vec3 front, Vec3 back);
+	std::shared_ptr<Bogie> m_bogieFront;
+	std::shared_ptr<Bogie> m_bogieBack;
+	Unigine::NodePtr m_upper; // node platform and top
 };

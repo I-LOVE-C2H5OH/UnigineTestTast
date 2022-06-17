@@ -5,63 +5,61 @@ using namespace Unigine;
 using namespace std;
 using namespace Unigine::Math;
 
-Train::Train(Road* road, float speed, vector<int> Cart_types)
+Train::Train(std::shared_ptr<Road> road, float speed, vector<CartType> const& Cart_types)
+	:m_speed(speed)
 {
-	m_speed = speed;
-	m_road = road;
-
 	for (int i = 0; i < Cart_types.size(); i++)
 	{
-		if (Cart_types[i] == 0)
+		if (Cart_types[i] == CartType::Barrel)
 		{
 			Cart vag(World::loadNode("Bogie.node"), World::loadNode("Bogie.node"),
-				World::loadNode("Up_box.node"), road, speed, i);
+				World::loadNode("Up_box.node"), road, m_speed, i);
 			m_Carts.emplace_back(vag);
 		}
-		else
+		else if (Cart_types[i] == CartType::Van)
 		{
 			Cart vag(World::loadNode("Bogie.node"), World::loadNode("Bogie.node"),
-				World::loadNode("Up_cylingr.node"), road, speed, i);
+				World::loadNode("Up_cylingr.node"), road, m_speed, i);
 			m_Carts.emplace_back(vag);
 		}
 	}
 }
 
-void Train::SpeedAdd(float value_for_the_sum_to_the_speed)
+void Train::speedAdd(float speedAdding) //the value that is added to the speed 
 {
-	if (!((m_speed >= 0.5 && value_for_the_sum_to_the_speed > 0) || (m_speed < 0.0005 && value_for_the_sum_to_the_speed <0)))
+	if (!((m_speed >= 0.5 && speedAdding > 0) || (m_speed < 0.0005 && speedAdding <0)))
 	{
-		m_speed += value_for_the_sum_to_the_speed;
+		m_speed += speedAdding;
 		for (int i = 0; i < m_Carts.size(); i++)
 		{
-			m_Carts[i].SpeedAdd(value_for_the_sum_to_the_speed);
+			m_Carts[i].speedAdd(speedAdding);
 		}
 	}
 }
 
-float Train::GetSpeed() const
+float Train::getSpeed() const
 {
 	return m_speed;
 }
 
 
-NodePtr Train::GetNodeForCamera()
+NodePtr Train::getNodeForCamera()
 {
 	int size = m_Carts.size() - 1;
-	return m_Carts[size].GetNodeForCamera();
+	return m_Carts[size].getNodeForCamera();
 }
 
-void Train::Update()
+void Train::update()
 {
 	int lastCart = m_Carts.size() - 1;
 	if (!m_Carts[lastCart].isEndRoads())
 	{
-		m_Carts[0].Update();
-		vec3 reference = m_Carts[0].GetFrontBogie();
+		m_Carts[0].update();
+		vec3 reference = m_Carts[0].getFrontBogie();
 		for (int i = 1; i < m_Carts.size(); i++)
 		{
-			m_Carts[i].Update(reference, 3);
-			reference = m_Carts[i].GetFrontBogie();
+			m_Carts[i].update(reference, 3);
+			reference = m_Carts[i].getFrontBogie();
 		}
 	}
 }

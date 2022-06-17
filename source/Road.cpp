@@ -1,11 +1,13 @@
 #include "Road.h"
 
+using namespace Unigine;
+using namespace std;
+using namespace Unigine::Math;
+
 Road::Road(WorldSplineGraphPtr road)
+	:m_road(road)
 {
-
-	m_road = road;
-	road->getSplineSegments(m_road_segment);
-
+	m_road->getSplineSegments(m_road_segment);
 	for (SplineSegmentPtr& segment : m_road_segment)
 	{
 		segment->assignSource(
@@ -19,9 +21,9 @@ Road::Road(WorldSplineGraphPtr road)
 }
 
 
-int Road::GetSegmentCount()
+int Road::getSegmentCount()
 {
-	return this->m_road_segment.size();
+	return m_road_segment.size();
 }
 
 Vec3 Road::calcPoint(float t)

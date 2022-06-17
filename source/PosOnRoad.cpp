@@ -1,20 +1,26 @@
 #include "PosOnRoad.h"
 
-PosOnRoad::PosOnRoad(Road* road, float distance)
+using namespace Unigine;
+using namespace std;
+using namespace Unigine::Math;
+
+PosOnRoad::PosOnRoad(std::shared_ptr<Road> road, float distance)
+	:sss(road)
 {
-	this->m_road = road;
-	CalcInit(distance);
+	m_road = road.get();
+	m_segmentCount = road->getSegmentCount();
+	calcInit(distance);
 }
 
 
-float PosOnRoad::GetStart_t() const
+float PosOnRoad::getStart_t() const
 {
 	return m_t;
 }
-void PosOnRoad::CalcInit(float distance)
+void PosOnRoad::calcInit(float distance)
 {
 	float dist = 0;
-	float tmax = m_road->GetSegmentCount();
+	float tmax = m_road->getSegmentCount();
 	vec3 pos = m_road->calcPoint(0);
 	for (float i = 0.0f; i < tmax; i += 0.0001)
 	{
@@ -23,78 +29,79 @@ void PosOnRoad::CalcInit(float distance)
 		pos = post;
 		if (dist >= distance)
 		{
-			this->m_t = i;
+			m_t = i;
 			i = tmax + 1;
 		}
 	}
 
 }
-float PosOnRoad::correct(float pred_position_distance, float distance, vec3 pred_position, float in_t)
+float PosOnRoad::correct(float pred_position_distance, float distance, vec3 const& pred_position, float inT)
 {
-	float tmax = m_road->GetSegmentCount();
-	vec3 post = m_road->calcPoint(in_t);
+	float tmax = m_road->getSegmentCount();
+	vec3 post = m_road->calcPoint(inT);
 	if (pred_position_distance > distance)
 	{
-		for (float i = in_t; i > 0; i -= 0.0001)
+		for (float i = inT; i > 0; i -= 0.0001)
 		{
 			post = m_road->calcPoint(i);
 			pred_position_distance = space(pred_position, post);
-			if (pred_position_distance <= distance)
+			if (pred_position_distance <= distance) //Checking the "distance traveled" for the required offset
 			{
-				in_t = i;
-				i = -1;
+				inT = i;
+				i = -1;  //forced exit from the loop
 			}
 		}
 	}
-	else if (pred_position_distance < distance)
+	else if (pred_position_distance < distance) 
 	{
-		for (float i = in_t; i < tmax; i += 0.0001)
+		for (float i = inT; i < tmax; i += 0.0001)
 		{
 			post = m_road->calcPoint(i);
 			pred_position_distance = space(pred_position, post);
-			if (pred_position_distance >= distance)
+			if (pred_position_distance >= distance) //Checking the "distance traveled" for the required offset
 			{
-				in_t = i;
-				i = tmax + 1;
+				inT = i;
+				i = tmax + 1;  //forced exit from the loop
 			}
 		}
 	}
 
-	return in_t;
+	return inT;
 
 }
 
-bool PosOnRoad::isEndRoads(float in_t)
+bool PosOnRoad::isEndRoads(float inT) const
 {
-	if (in_t >= m_road->GetSegmentCount() - 0.1 || in_t == 0)
+	if (inT >= m_segmentCount - 0.1 || inT == 0)
+	{
 		return true;
-	else
-		return false;
+	}
+	return false;
 }
 
-float PosOnRoad::AddOffset(float offset, Math::vec3 pred_position, float distance, float in_t)
+float PosOnRoad::addOffset(float offset, Math::vec3 const& pred_position, float distance, float inT)
 {
 	float dist = 0;
-	float tmax = m_road->GetSegmentCount();
-	vec3 pos = m_road->calcPoint(in_t);
-	for (float i = in_t; i < tmax; i += 0.0001)
+	float tmax = m_road->getSegmentCount();
+	vec3 pos = m_road->calcPoint(inT);
+	for (float i = inT; i < tmax; i += 0.0001)
 	{
 		vec3 post = m_road->calcPoint(i);
 		dist += space(post, pos);
 		
 		pos = post;
-		if (dist >= offset)
+		if (dist >= offset) //Checking the "distance traveled" for the required offset
 		{
-			in_t = i;
-			i = tmax + 1;
+			inT = i;
+			i = tmax + 1; //forced exit from the loop
 		}
 	}
 	float pred_position_distance = space(pred_position, pos);
 	if (!approximate(pred_position_distance, 0.05f, distance))
 	{
-		in_t = correct(pred_position_distance, distance, pred_position, in_t);
+		inT = correct(pred_position_distance, distance, pred_position, inT);
 	}
-	return in_t;
+	return inT;
 }
 
 bool PosOnRoad::approximate(float value, float inaccuracy, float reference_distance)
@@ -107,45 +114,45 @@ bool PosOnRoad::approximate(float value, float inaccuracy, float reference_dista
 		return returned;
 }
 
-float PosOnRoad::AddOffset(float offset, float in_t)
+float PosOnRoad::addOffset(float offset, float inT)
 {
 	float dist = 0;
-	float tmax = m_road->GetSegmentCount();
-	vec3 pos = m_road->calcPoint(in_t);
-	for (float i = in_t; i < tmax; i += 0.0001)
+	float tmax = m_road->getSegmentCount();
+	vec3 pos = m_road->calcPoint(inT);
+	for (float i = inT; i < tmax; i += 0.0001)
 	{
 		vec3 post = m_road->calcPoint(i);
 		dist += space(post, pos);
 		pos = post;
-		if (dist >= offset)
+		if (dist >= offset) //Checking the "distance traveled" for the required offset
 		{
-			in_t = i;
-			i = tmax + 1;
+			inT = i;
+			i = tmax + 1;  //forced exit from the loop
 		}
 	}
-	return in_t;
+	return inT;
 }
 
 
 
-vec3 PosOnRoad::GetNewPos(float t)
+vec3 const& PosOnRoad::getNewPos(float t)
 {	
 	return m_road->calcPoint(t) + vec3(0,0,1);
 }
 
-vec3 PosOnRoad::GetNewDir(float t)
+vec3 const& PosOnRoad::getNewDir(float t)
 {
 	return m_road->calcTangent(t);
 }
 
-vec3 PosOnRoad::GetNewUpVec(float t)
+vec3 const& PosOnRoad::getNewUpVec(float t)
 {
 	return m_road->calcUpVector(t);
 }
 
-float PosOnRoad::space(Vec3 point_0, Vec3 point_1)
+float PosOnRoad::space(Vec3 const& point_0, Vec3 const& point_1)
 {
-	float new_x = point_0.x - point_1.x;
-	float new_y = point_0.y - point_1.y;
-	return Math::fsqrt(new_x * new_x + new_y * new_y);
+	float newX = point_0.x - point_1.x;
+	float newY = point_0.y - point_1.y;
+	return Math::fsqrt(newX * newX + newY * newY);
 }

@@ -10,23 +10,21 @@
 #include <vector>
 #include <memory>
 
-
-
-
-
-class Bogie {
+class Bogie 
+{
 public:
-	Bogie(Unigine::NodePtr bogie, Road* road, float nulldistance);
-	void DistanceAdd(float frameSpeed);
-	void DistanceAdd(float frameSpeed, Math::vec3 pos, float distance);
-	vec3 GetPosition();
+	Bogie(Unigine::NodePtr const& bogie, std::shared_ptr<Road> road, float nullDistance);
+	void distanceAdd(float frameSpeed);
+	void distanceAdd(float frameSpeed, Unigine::Math::vec3 const& pos, float distance);
+	Unigine::Math::vec3 const& getPosition();
 	bool isEndRoads();
 private:
-	const float m_pi = 3.1415926f;
-	const float m_R = 1.5f / 2;
-	float m_t = 0;
+	void setPosAndUpvecAndDir();
+	void wheelRotation(float offset);
+	const float m_pi = 3.1415926f; //Pi
+	const float m_r = 1.5f / 2; //Wheel Radius
+	float m_t = 0; // t - position on spline 0 < t < CountSegment Taken from Unugine doc
 	float m_distance = 0;
-	void wheel_rotation(float offset);
-	NodePtr m_bogieNode;
-	shared_ptr<PosOnRoad> m_road;
+	Unigine::NodePtr m_bogieNode;
+	std::shared_ptr<PosOnRoad> m_road;
 };

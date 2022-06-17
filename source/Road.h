@@ -10,21 +10,22 @@
 #include <UnigineGame.h>
 
 #include <vector>
+#include <memory>
 
-using namespace Unigine;
-using namespace std;
-using namespace Unigine::Math;
 
-class Road {
+class Road 
+{
 public:
-	Road(WorldSplineGraphPtr road);
-	Vec3 calcPoint(float t);
-	Vec3 calcTangent(float t);
-	Vec3 calcUpVector(float t);
-	int GetSegmentCount();
+	Road(Unigine::WorldSplineGraphPtr road);
+	Unigine::Math::Vec3 calcPoint(float t);
+	// t - position on spline 0 < t < CountSegment Taken from Unugine doc
+	Unigine::Math::Vec3 calcTangent(float t);
+	Unigine::Math::Vec3 calcUpVector(float t);
+	int getSegmentCount();
 private:
-	WorldSplineGraphPtr m_road;
-	Vector<SplineSegmentPtr> m_road_segment;
+	
+	Unigine::WorldSplineGraphPtr m_road;
+	Unigine::Vector<Unigine::SplineSegmentPtr> m_road_segment;
 	float m_road_Lenght = 0;
 };
 #endif

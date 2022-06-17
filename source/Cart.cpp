@@ -4,39 +4,36 @@ using namespace Unigine;
 using namespace std;
 using namespace Unigine::Math;
 
-Cart::Cart(NodePtr bogie_Front, NodePtr bogie_BACK, NodePtr Upper,
-	Road* road, float speed, int position)
+Cart::Cart(NodePtr const& bogie_Front, NodePtr const& bogie_BACK, NodePtr Upper,
+	std::shared_ptr<Road> road, float speed, int position)
+	:m_upper(Upper),
+	m_speed(speed)
 {
-	//make_unique<Train> (Train(&roads[0], 5, carts_types_Player));
-	this->m_Upper = Upper;
-	this->m_speed = speed;
-	this->m_bogie_back = make_unique<Bogie>(bogie_BACK, road, 7 * position);
-	this->m_bogie_front = make_unique<Bogie>(bogie_Front, road, 7 * position + 4);
+	
+	m_bogieBack = make_unique<Bogie>(bogie_BACK, road, 7 * position);
+	
+	m_bogieFront = make_unique<Bogie>(bogie_Front, road, 7 * position + 4);
 
-	Upper->setPosition(centerPoint(m_bogie_back->GetPosition(),
-		m_bogie_front->GetPosition()));
+	m_upper->setPosition(centerPoint(m_bogieBack->getPosition(),
+		m_bogieFront->getPosition()));
 
-	Upper->setRotation(quat(0, 0, 90 +
-		getAngleBetweenBogies(m_bogie_front->GetPosition(), m_bogie_back->GetPosition())));
+	m_upper->setRotation(quat(0, 0, 90 +
+		getAngleBetweenBogies(m_bogieFront->getPosition(), m_bogieBack->getPosition())));
 }
 
 
-float Cart::space(Vec3 point_0, Vec3 point_1)
+float Cart::space(Vec3 const& pointOne, Vec3 const& pointTwo)
 {
-	float new_x = point_0.x - point_1.x;
-	float new_y = point_0.y - point_1.y;
-	return Math::fsqrt(new_x * new_x + new_y * new_y);
+	float newX = pointOne.x - pointTwo.x;
+	float newY = pointOne.y - pointTwo.y;
+	return Math::fsqrt(newX * newX + newY * newY);
 }
 
 
 float Cart::getAngleBetweenBogies(Vec3 front, Vec3 back)
 {
-
 	vec2 temp = vec2(front.x - back.x, front.y - back.y);
-
-	float test = atan2(temp.y, temp.x) * 57.29578f;
-
-	return test;
+	return atan2(temp.y, temp.x) * 57.29578f; //atan2 returned angle in radians, 1 radian ~~ 57.29578 degrees
 }
 
 Vec3 Cart::centerPoint(Vec3 point1, Vec3 point2)
@@ -44,60 +41,60 @@ Vec3 Cart::centerPoint(Vec3 point1, Vec3 point2)
 	return Vec3((point1.x + point2.x) / 2, (point1.y + point2.y) / 2, 0);
 }
 
-NodePtr Cart::GetNodeForCamera() const
+NodePtr const& Cart::getNodeForCamera() const
 {
-	return m_Upper;
+	return m_upper;
 }
 
 
 bool Cart::isEndRoads()
 {
-	if (m_bogie_front->isEndRoads() && m_bogie_back->isEndRoads())
+	if (m_bogieFront->isEndRoads() && m_bogieBack->isEndRoads())
+	{
 		return true;
-	else
-		return false;
+	}
+	return false;
 }
 
-int Cart::Update(Math::vec3 pos, float distance)
+int Cart::update(Math::vec3 const& pos, float distance)
 {
-	float speed = this->m_speed * Game::getIFps();
+	float speed = m_speed * Game::getIFps();
 
-	this->m_bogie_back->DistanceAdd(speed, pos, distance);
-	pos = m_bogie_back->GetPosition();
-	this->m_bogie_front->DistanceAdd(speed, pos, 4);
+	m_bogieBack->distanceAdd(speed, pos, distance);
+	m_bogieFront->distanceAdd(speed, m_bogieBack->getPosition(), 4);
 
-	m_Upper->setPosition(centerPoint(m_bogie_back->GetPosition(), m_bogie_front->GetPosition()));
-	m_Upper->setRotation(quat(0, 0, 90 +
-		getAngleBetweenBogies(m_bogie_front->GetPosition(), m_bogie_back->GetPosition())));
+	m_upper->setPosition(centerPoint(m_bogieBack->getPosition(), m_bogieFront->getPosition()));
+	m_upper->setRotation(quat(0, 0, 90 +
+		getAngleBetweenBogies(m_bogieFront->getPosition(), m_bogieBack->getPosition())));
 
 	return 0;
 }
 
-vec3 Cart::GetFrontBogie()
+int Cart::update()
 {
-	return m_bogie_front->GetPosition();
-}
+	float speed = m_speed * Game::getIFps();
 
-int Cart::Update()
-{
-	float speed = this->m_speed * Game::getIFps();
+	m_bogieBack->distanceAdd(speed);
+	m_bogieFront->distanceAdd(speed);
 
-	this->m_bogie_back->DistanceAdd(speed);
-	this->m_bogie_front->DistanceAdd(speed);
+	m_upper->setPosition(centerPoint(m_bogieBack->getPosition(), m_bogieFront->getPosition()));
 
-	m_Upper->setPosition(centerPoint(m_bogie_back->GetPosition(), m_bogie_front->GetPosition()));
-
-	m_Upper->setRotation(quat(0, 0, 90 +
-		getAngleBetweenBogies(m_bogie_front->GetPosition(), m_bogie_back->GetPosition())));
-	
+	m_upper->setRotation(quat(0, 0, 90 +
+		getAngleBetweenBogies(m_bogieFront->getPosition(), m_bogieBack->getPosition())));
 	return 1;
 }
 
-void Cart::SpeedAdd(float speedadding)
+
+
+vec3 const& Cart::getFrontBogie()
 {
-	m_speed += speedadding;
+	return m_bogieFront->getPosition();
 }
-float Cart::GetSpeed() const
+void Cart::speedAdd(float speedAdding)
+{
+	m_speed += speedAdding;
+}
+float Cart::getSpeed() const
 {
 	return m_speed;
 }
