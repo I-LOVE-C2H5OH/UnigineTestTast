@@ -35,7 +35,6 @@ private:
 		Unigine::Math::vec3 const& pred_position, float inT);
 	float m_t = 0;
 	// t - position on spline 0<t<CountSegment
-	Road* m_road;
-	std::shared_ptr<Road> sss;
+	std::shared_ptr<Road> m_road;
 	int m_segmentCount = 0;
 };

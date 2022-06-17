@@ -47,11 +47,7 @@ int AppWorldLogic::init()
 	
 	m_roads.push_back(make_shared<Road>(Road(WorldSplineGraphPlayer)));
 	m_roads.push_back((make_shared<Road>(WorldSplineGraphNPC)));;
-	
-	std::shared_ptr<Road> sss = m_roads[0];
-
 	vector<CartType> carts_types_NPC;
-
 	carts_types_NPC.push_back(CartType::Barrel);
 	carts_types_NPC.push_back(CartType::Van);
 	carts_types_NPC.push_back(CartType::Barrel);

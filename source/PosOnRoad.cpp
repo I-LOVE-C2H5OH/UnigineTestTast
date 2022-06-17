@@ -5,9 +5,8 @@ using namespace std;
 using namespace Unigine::Math;
 
 PosOnRoad::PosOnRoad(std::shared_ptr<Road> road, float distance)
-	:sss(road)
+	:m_road(road)
 {
-	m_road = road.get();
 	m_segmentCount = road->getSegmentCount();
 	calcInit(distance);
 }
