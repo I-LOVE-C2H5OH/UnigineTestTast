@@ -14,9 +14,9 @@ PosOnRoad::PosOnRoad(std::shared_ptr<Road> road, float distance)
 void PosOnRoad::calcInit(float distance)
 {
 	float dist = 0;
-	const float tmax = m_road->getSegmentCount();
+	const float maxStartSplinePos = m_road->getSegmentCount();
 	vec3 pos = m_road->calcPoint(0);
-	for (float i = 0.0f; i < tmax; i += 0.0001)
+	for (float i = 0.0f; i < maxStartSplinePos; i += 0.0001)
 	{
 		vec3 post = m_road->calcPoint(i);
 		dist += space(post, pos);
@@ -24,7 +24,7 @@ void PosOnRoad::calcInit(float distance)
 		if (dist >= distance)
 		{
 			m_splinePosition = i;
-			i = tmax + 1;
+			i = maxStartSplinePos + 1;
 		}
 	}
 }
@@ -52,9 +52,9 @@ vec3 const& PosOnRoad::getNewUpVec(float splinePos) const
 float PosOnRoad::addOffset(float offset, Math::vec3 const& predPosition, float distance, float inSplinePos) const
 {
 	float dist = 0;
-	const float tmax = m_road->getSegmentCount();
+	const float maxStartSplinePos = m_road->getSegmentCount();
 	vec3 pos = m_road->calcPoint(inSplinePos);
-	for (float i = inSplinePos; i < tmax; i += 0.0001)
+	for (float i = inSplinePos; i < maxStartSplinePos; i += 0.0001)
 	{
 		vec3 post = m_road->calcPoint(i);
 		dist += space(post, pos);
@@ -65,7 +65,7 @@ float PosOnRoad::addOffset(float offset, Math::vec3 const& predPosition, float d
 		{
 			inSplinePos = i;
 			//forced exit from the loop
-			i = tmax + 1;
+			i = maxStartSplinePos + 1;
 		}
 	}
 	float predPositionDistance = space(predPosition, pos);
@@ -104,7 +104,7 @@ bool PosOnRoad::approximate(float value, float inaccuracy, float referenceDistan
 
 float PosOnRoad::correct(float predPositionDistance, float distance, vec3 const& predPosition, float inSplinePos) const
 {
-	const float tmax = m_road->getSegmentCount();
+	const float maxStartSplinePos = m_road->getSegmentCount();
 	vec3 post = m_road->calcPoint(inSplinePos);
 	if (predPositionDistance > distance)
 	{
@@ -123,7 +123,7 @@ float PosOnRoad::correct(float predPositionDistance, float distance, vec3 const&
 	}
 	else if (predPositionDistance < distance)
 	{
-		for (float i = inSplinePos; i < tmax; i += 0.0001)
+		for (float i = inSplinePos; i < maxStartSplinePos; i += 0.0001)
 		{
 			post = m_road->calcPoint(i);
 			predPositionDistance = space(predPosition, post);
@@ -132,7 +132,7 @@ float PosOnRoad::correct(float predPositionDistance, float distance, vec3 const&
 			{
 				inSplinePos = i;
 				//forced exit from the loop
-				i = tmax + 1;
+				i = maxStartSplinePos + 1;
 			}
 		}
 	}
