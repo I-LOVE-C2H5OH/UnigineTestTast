@@ -36,8 +36,8 @@ AppWorldLogic::~AppWorldLogic()
 int AppWorldLogic::init()
 {	
 	m_camera_actor = checked_ptr_cast<Player>(World::getNodeByName("main_player"));
-	m_CameraPlayer_Train = PlayerDummy::create();
-	m_CameraPlayer_Train->setWorldRotation(quat(0,0,0));
+	m_splinePositionrainCamera = PlayerDummy::create();
+	m_splinePositionrainCamera->setWorldRotation(quat(0,0,0));
 	WorldSplineGraphPtr WorldSplineGraphPlayer = WorldSplineGraph::create();
 	WorldSplineGraphPtr WorldSplineGraphNPC = WorldSplineGraph::create();
 	
@@ -51,11 +51,11 @@ int AppWorldLogic::init()
 	carts_types_NPC.push_back(CartType::Barrel);
 	carts_types_NPC.push_back(CartType::Van);
 	carts_types_NPC.push_back(CartType::Barrel);
-	m_TrainPlayer = make_unique<Train> (Train((m_roads[0]), 5, carts_types_NPC));
-	m_TrainNPC = make_unique<Train> ((m_roads[1]), 5, carts_types_NPC);
-	m_TrainPlayer->getNodeForCamera()->addChild(m_CameraPlayer_Train);
-	m_CameraPlayer_Train->setPosition(Vec3(0, 0, 3));
-	m_CameraPlayer_Train->rotate(90, 180, 0);
+	m_playerTrain = make_unique<Train> (Train((m_roads[0]), 5, carts_types_NPC));
+	m_npcTrain = make_unique<Train> ((m_roads[1]), 5, carts_types_NPC);
+	m_playerTrain->getNodeForCamera()->addChild(m_splinePositionrainCamera);
+	m_splinePositionrainCamera->setPosition(Vec3(0, 0, 3));
+	m_splinePositionrainCamera->rotate(90, 180, 0);
 	return 1;
 }
 
@@ -65,28 +65,26 @@ int AppWorldLogic::init()
 
 int AppWorldLogic::update()
 {
-	m_TrainPlayer->update();
-	m_TrainNPC->update();
+	m_playerTrain->update();
+	m_npcTrain->update();
 
 	if (Input::isKeyPressed(Input::KEY_R))
 	{
-		quat rot = m_CameraPlayer_Train->getWorldRotation();
-		m_CameraPlayer_Train->rotate(0, 180, 0);
+		quat rot = m_splinePositionrainCamera->getWorldRotation();
+		m_splinePositionrainCamera->rotate(0, 180, 0);
 	}
 	if (Input::isKeyPressed(Input::KEY_UP))
 	{
-		m_TrainPlayer->speedAdd(0.0005);
+		m_playerTrain->speedAdd(0.0005);
 	}
 	if (Input::isKeyPressed(Input::KEY_DOWN))
 	{
-		m_TrainPlayer->speedAdd(-0.0005);
-
-
+		m_playerTrain->speedAdd(-0.0005);
 	}
 
 	if (Input::isKeyPressed(Input::KEY_F2))
 	{
-		Game::setPlayer(m_CameraPlayer_Train);
+		Game::setPlayer(m_splinePositionrainCamera);
 	}
 
 	if (Input::isKeyPressed(Input::KEY_F3))

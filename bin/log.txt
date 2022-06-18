@@ -5,8 +5,8 @@ Binary: Windows 64-bit Visual C++ 1900 Debug
 Engine features: Direct3D11 OpenAL XPad360 Joystick HalfTexCoords OpenEXR
 
 ---- Configs ----
-Loading boot config "E:/unigine_project/unigine_project/data/configs/default.boot"...
-Loading user config "E:/unigine_project/unigine_project/data/configs/default.user"...
+Loading boot config "C:/Users/nikita/Documents/GitHub/UnigineTestTast/data/configs/default.boot"...
+Loading user config "C:/Users/nikita/Documents/GitHub/UnigineTestTast/data/configs/default.user"...
 Using config file "configs/default.config"
 Using boot config file "configs/default.boot"
 Using user config file "configs/default.user"
@@ -38,14 +38,14 @@ GPU:	NVIDIA GRID K280Q
 Loading "FbxImporter_x64d.dll"...
 Loading "GLTFImporter_x64d.dll"...
 Loading "FbxExporter_x64d.dll"...
-Plugins initialization: 5ms
+Plugins initialization: 131ms
 
 
 ---- Application ----
 Loading "dxgi.dll"...
 Loading "openal32.dll"...
 Set 860x560 fullwindow video mode
-Application initialization: 329ms
+Application initialization: 507ms
 
 
 
@@ -56,13 +56,13 @@ Maximum texture size:    16384
 Maximum texture units:   16
 
 ---- Filesystem ----
-App path:  E:/unigine_project/unigine_project/bin/
-Data path: E:/unigine_project/unigine_project/data/
-Save path: E:/unigine_project/unigine_project/bin/
+App path:  C:/Users/nikita/Documents/GitHub/UnigineTestTast/bin/
+Data path: C:/Users/nikita/Documents/GitHub/UnigineTestTast/data/
+Save path: C:/Users/nikita/Documents/GitHub/UnigineTestTast/bin/
 WARNING:	FileSystemCore::mount_file(): can't mount "test/NodeDummy_1.node" file, because of GUID collision
 
-Runtimes loaded: 6 3ms
-Filesystem initialization: 579ms
+Runtimes loaded: 6 33ms
+Filesystem initialization: 1154ms
 
 ---- Sound ----
 Renderer: OpenAL Soft on Удаленное аудио
@@ -91,9 +91,9 @@ HRTF not enabled!
 
 ---- PathFind ----
 
-Loading controls "E:/unigine_project/unigine_project/data/configs/default.controls"...
+Loading controls "C:/Users/nikita/Documents/GitHub/UnigineTestTast/data/configs/default.controls"...
 Loading "xinput1_4.dll"...
-Loading config "E:/unigine_project/unigine_project/data/configs/default.config"...
+Loading config "C:/Users/nikita/Documents/GitHub/UnigineTestTast/data/configs/default.config"...
 
 ---- Materials ----
 ERROR:	Material::loadXml(): can't find material name
@@ -105,14 +105,14 @@ ERROR:		"Rels_Strelka/_Materials/Rels.mat" can't find material : 72bf28722d636d2
 ERROR:		"Rels_Strelka/_Materials/Shpala_Concrete/ShpalaConcrete_LOD0.mat" can't find material : 863ea5f9390f970417c93693f1c04ad66fea043d
 ERROR:		"Rels_Strelka/_Materials/Shpala_Concrete_LOD1/Shpala_LOD1.mat" can't find material : 863ea5f9390f970417c93693f1c04ad66fea043d
 ERROR:		"Rels_Strelka/_Materials/Shpala_Wood/ShpalaWood_LOD0.mat" can't find material : 863ea5f9390f970417c93693f1c04ad66fea043d
-Engine base materials loaded: 192 / 192 (371ms)
-Engine materials loaded:      70 / 70 (28ms)
-User materials loaded:        433 / 434 (404ms)
+Engine base materials loaded: 192 / 192 (423ms)
+Engine materials loaded:      70 / 70 (30ms)
+User materials loaded:        433 / 434 (2836ms)
 Total materials: 695
 
 
 ---- Properties ----
-Properties loaded:            2 / 2 (0ms)
+Properties loaded:            2 / 2 (5ms)
 
 Processor registered "DefaultProcessor".
 Importer registered "FbxImporter".
@@ -127,42 +127,13 @@ Processor registered "CloseAnimation".
 Importer registered "GLTFImporter".
 Exporter registered "FbxExporter".
 Set 960x540 windowed video mode
-Engine initialization: 1889ms
+Engine initialization: 5337ms
 
 
 ---- Interpreter ----
 Version: 2.90
 
 Unigine~# config_autosave 0 && world_load "unigine_project"
-Script loading "core/unigine.usc" 9ms
+Script loading "core/unigine.usc" 66ms
 Loading "core/locale/unigine.locale" dictionary 1ms
-World loading "unigine_project.world" 348ms
-
----- Load cache textures ----
-Cache textures loaded 311 (86ms)
-
-Exporter unregistered "FbxExporter".
-Importer unregistered "GLTFImporter".
-Processor unregistered "MergeStaticMeshes".
-Processor unregistered "MergeSurfacesByMaterials".
-Processor unregistered "CombineByPostfixes".
-Processor unregistered "CreateUV".
-Processor unregistered "CloseAnimation".
-Importer unregistered "FbxImporter".
-Processor unregistered "MergeSimilarMaterials".
-Processor unregistered "SplitByBound".
-Processor unregistered "Repivot".
-Close "openal32.dll"
-ERROR:	D3D11RenderContext::destroyContext(): 524 unreleased references
-Total RAM:           9.7 MB
-- system RAM used:   2.4 MB
-- pool RAM reserved: 7.3 MB
-- pool RAM used:     2.0 MB
-Total allocs:        132132
-- system allocs:     639
-- 16b pool allocs:   131265
-- 32b pool allocs:   195
-- 64b pool allocs:   33
-
-
-Shutdown
+World loading "unigine_project.world" 425ms

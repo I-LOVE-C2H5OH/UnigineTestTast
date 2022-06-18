@@ -4,11 +4,11 @@ using namespace Unigine;
 using namespace std;
 using namespace Unigine::Math;
 
-Road::Road(WorldSplineGraphPtr road)
+Road::Road(WorldSplineGraphPtr const& road)
 	:m_road(road)
 {
-	m_road->getSplineSegments(m_road_segment);
-	for (SplineSegmentPtr& segment : m_road_segment)
+	m_road->getSplineSegments(m_roadSegments );
+	for (SplineSegmentPtr& segment : m_roadSegments )
 	{
 		segment->assignSource(
 			"Rels_Strelka\\_Nodes\\PutWood\\PutWood_100m_.node",
@@ -16,35 +16,32 @@ Road::Road(WorldSplineGraphPtr road)
 		segment->setSegmentMode(
 			"Rels_Strelka\\_Nodes\\PutWood\\PutWood_100m_.node",
 			SplineSegment::SEGMENT_STRETCH);
-		m_road_Lenght += segment->getLength();
+		m_roadLenght += segment->getLength();
 	}
 }
 
-
-int Road::getSegmentCount()
+Vec3 Road::calcPoint(float splinePos) const
 {
-	return m_road_segment.size();
+	int segment = splinePos;
+	splinePos -= segment;
+	return m_roadSegments [segment]->calcPoint(splinePos) + m_road->getWorldPosition();
 }
 
-Vec3 Road::calcPoint(float t)
+Vec3 Road::calcTangent(float splinePos) const
 {
-	int segment = t;
-	t -= segment;
-	return m_road_segment[segment]->calcPoint(t) + m_road->getWorldPosition();
+	int segment = splinePos;
+	splinePos -= segment;
+	return m_roadSegments [segment]->calcTangent((splinePos));
 }
 
-Vec3 Road::calcTangent(float t)
+Vec3 Road::calcUpVector(float splinePos) const
 {
-	int segment = t;
-	t -= segment;
-	return m_road_segment[segment]->calcTangent((t));
+	int segment = splinePos;
+	splinePos -= segment;
+	return m_roadSegments [segment]->calcUpVector(splinePos);
 }
 
-Vec3 Road::calcUpVector(float t)
+int Road::getSegmentCount() const
 {
-	int segment = t;
-	t -= segment;
-	return m_road_segment[segment]->calcUpVector(t);
+	return m_roadSegments.size();
 }
-
-

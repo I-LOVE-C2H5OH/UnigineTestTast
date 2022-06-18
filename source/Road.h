@@ -16,16 +16,19 @@
 class Road 
 {
 public:
-	Road(Unigine::WorldSplineGraphPtr road);
-	Unigine::Math::Vec3 calcPoint(float t);
-	// t - position on spline 0 < t < CountSegment Taken from Unugine doc
-	Unigine::Math::Vec3 calcTangent(float t);
-	Unigine::Math::Vec3 calcUpVector(float t);
-	int getSegmentCount();
+	Road(Unigine::WorldSplineGraphPtr const& road);
+
+	/**
+	* splinePos - position on spline 0 < splinePos < CountSegment Taken from Unugine doc
+	*/
+	Unigine::Math::Vec3 calcPoint(float splinePos) const;
+	Unigine::Math::Vec3 calcTangent(float splinePos) const;
+	Unigine::Math::Vec3 calcUpVector(float splinePos) const;
+	int getSegmentCount() const;
 private:
 	
 	Unigine::WorldSplineGraphPtr m_road;
-	Unigine::Vector<Unigine::SplineSegmentPtr> m_road_segment;
-	float m_road_Lenght = 0;
+	Unigine::Vector<Unigine::SplineSegmentPtr> m_roadSegments ;
+	float m_roadLenght = 0;
 };
 #endif

@@ -38,14 +38,14 @@ GPU:	NVIDIA GRID K280Q
 Loading "FbxImporter_x64d.dll"...
 Loading "GLTFImporter_x64d.dll"...
 Loading "FbxExporter_x64d.dll"...
-Plugins initialization: 3ms
+Plugins initialization: 5ms
 
 
 ---- Application ----
 Loading "dxgi.dll"...
 Loading "openal32.dll"...
 Set 860x560 fullwindow video mode
-Application initialization: 263ms
+Application initialization: 329ms
 
 
 
@@ -62,7 +62,7 @@ Save path: E:/unigine_project/unigine_project/bin/
 WARNING:	FileSystemCore::mount_file(): can't mount "test/NodeDummy_1.node" file, because of GUID collision
 
 Runtimes loaded: 6 3ms
-Filesystem initialization: 507ms
+Filesystem initialization: 579ms
 
 ---- Sound ----
 Renderer: OpenAL Soft on Удаленное аудио
@@ -105,9 +105,9 @@ ERROR:		"Rels_Strelka/_Materials/Rels.mat" can't find material : 72bf28722d636d2
 ERROR:		"Rels_Strelka/_Materials/Shpala_Concrete/ShpalaConcrete_LOD0.mat" can't find material : 863ea5f9390f970417c93693f1c04ad66fea043d
 ERROR:		"Rels_Strelka/_Materials/Shpala_Concrete_LOD1/Shpala_LOD1.mat" can't find material : 863ea5f9390f970417c93693f1c04ad66fea043d
 ERROR:		"Rels_Strelka/_Materials/Shpala_Wood/ShpalaWood_LOD0.mat" can't find material : 863ea5f9390f970417c93693f1c04ad66fea043d
-Engine base materials loaded: 192 / 192 (365ms)
+Engine base materials loaded: 192 / 192 (371ms)
 Engine materials loaded:      70 / 70 (28ms)
-User materials loaded:        433 / 434 (391ms)
+User materials loaded:        433 / 434 (404ms)
 Total materials: 695
 
 
@@ -127,19 +127,19 @@ Processor registered "CloseAnimation".
 Importer registered "GLTFImporter".
 Exporter registered "FbxExporter".
 Set 960x540 windowed video mode
-Engine initialization: 1785ms
+Engine initialization: 1889ms
 
 
 ---- Interpreter ----
 Version: 2.90
 
 Unigine~# config_autosave 0 && world_load "unigine_project"
-Script loading "core/unigine.usc" 8ms
+Script loading "core/unigine.usc" 9ms
 Loading "core/locale/unigine.locale" dictionary 1ms
-World loading "unigine_project.world" 350ms
+World loading "unigine_project.world" 348ms
 
 ---- Load cache textures ----
-Cache textures loaded 311 (82ms)
+Cache textures loaded 311 (86ms)
 
 Exporter unregistered "FbxExporter".
 Importer unregistered "GLTFImporter".
@@ -159,10 +159,10 @@ Total RAM:           9.7 MB
 - pool RAM reserved: 7.3 MB
 - pool RAM used:     2.0 MB
 Total allocs:        132132
-- system allocs:     641
+- system allocs:     639
 - 16b pool allocs:   131265
 - 32b pool allocs:   195
-- 64b pool allocs:   31
+- 64b pool allocs:   33
 
 
 Shutdown

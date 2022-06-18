@@ -50,9 +50,9 @@ private:
 	std::vector<std::shared_ptr<Road>> m_roads;
 	Unigine::ControlsPtr m_controls;
 	Unigine::PlayerPtr m_camera_actor;
-	Unigine::PlayerDummyPtr m_CameraPlayer_Train;
-	std::unique_ptr<Train> m_TrainNPC;
-	std::unique_ptr<Train> m_TrainPlayer;
+	Unigine::PlayerDummyPtr m_splinePositionrainCamera;
+	std::unique_ptr<Train> m_npcTrain;
+	std::unique_ptr<Train> m_playerTrain;
 };
 
 #endif // __APP_WORLD_LOGIC_H__

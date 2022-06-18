@@ -16,24 +16,37 @@ class PosOnRoad
 {
 public:
 	PosOnRoad(std::shared_ptr<Road> road, float distance);
-	Unigine::Math::vec3 const& getNewPos(float t);
-	float getStart_t() const;
-	Unigine::Math::vec3 const& getNewDir(float t);
-	Unigine::Math::vec3 const& getNewUpVec(float t);
+
+	/**
+	* calculates the initial splinePos at which the distance from the beginning of the spline will be equal to the input value
+	*/
+	void calcInit(float distance);
+	float getStartSplinePos() const;
+	Unigine::Math::vec3 const& getNewPos(float splinePos) const;
+	Unigine::Math::vec3 const& getNewDir(float splinePos) const;
+	Unigine::Math::vec3 const& getNewUpVec(float splinePos) const;
 	float addOffset(float offset, Unigine::Math::vec3 const& initialPosition, 
-		float distance, float inT);
-	float space(Unigine::Math::Vec3 const& pointOne, Unigine::Math::Vec3 const& pointTwo); 
-	//calculates the distance between points on the XY axis
-	bool isEndRoads(float inT) const;
+		float distance, float inSplinePos) const;
+
+	/**
+	* calculates the distance between points on the XY axis
+	*/
+	float space(Unigine::Math::Vec3 const& pointOne, Unigine::Math::Vec3 const& pointTwo) const;
+	bool isEndRoads(float inSplinePos) const;
 private:
-	bool approximate(float value, float inaccuracy, float referenceDistance); 
-	//checking for the maximum margin of error inaccuracy
-	void calcInit(float distance); 
-	//calculates the initial t at which the distance from the beginning of the spline will be equal to the input value
+
+	/**
+	* checking for the maximum margin of error inaccuracy.
+	*/
+	bool approximate(float value, float inaccuracy, float referenceDistance) const;
+	
 	float correct(float initialPositionDistance, float distance,
-		Unigine::Math::vec3 const& pred_position, float inT);
-	float m_t = 0;
-	// t - position on spline 0<t<CountSegment
+		Unigine::Math::vec3 const& predPosition, float inSplinePos) const;
+
+	/**
+	* splinePos - position on spline 0<t<CountSegment
+	*/
+	float m_splinePosition = 0;
 	std::shared_ptr<Road> m_road;
 	int m_segmentCount = 0;
 };

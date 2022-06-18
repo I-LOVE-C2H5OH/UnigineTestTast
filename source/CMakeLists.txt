@@ -35,7 +35,7 @@ add_executable(${target}
 		${CMAKE_CURRENT_LIST_DIR}/AppWorldLogic.cpp
 		${CMAKE_CURRENT_LIST_DIR}/AppWorldLogic.h
 		${CMAKE_CURRENT_LIST_DIR}/main.cpp
-	   "Train.h" "Train.cpp"  "Cart.h" "Cart.cpp"  "Road.h" "Road.cpp"  "Bogie.h" "Bogie.cpp" "PosOnRoad.h" "PosOnRoad.cpp" "CartType.h")
+	   "Train.h" "Train.cpp"  "Cart.h" "Cart.cpp"  "Road.h" "Road.cpp"  "Bogie.h" "Bogie.cpp" "PosOnRoad.h" "PosOnRoad.cpp" "CartType.h"  )
 
 target_include_directories(${target}
 	PRIVATE

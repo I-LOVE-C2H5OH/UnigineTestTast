@@ -11,11 +11,6 @@ PosOnRoad::PosOnRoad(std::shared_ptr<Road> road, float distance)
 	calcInit(distance);
 }
 
-
-float PosOnRoad::getStart_t() const
-{
-	return m_t;
-}
 void PosOnRoad::calcInit(float distance)
 {
 	float dist = 0;
@@ -28,109 +23,121 @@ void PosOnRoad::calcInit(float distance)
 		pos = post;
 		if (dist >= distance)
 		{
-			m_t = i;
+			m_splinePosition = i;
 			i = tmax + 1;
 		}
 	}
 
 }
-float PosOnRoad::correct(float pred_position_distance, float distance, vec3 const& pred_position, float inT)
+
+float PosOnRoad::getStartSplinePos() const
 {
-	float tmax = m_road->getSegmentCount();
-	vec3 post = m_road->calcPoint(inT);
-	if (pred_position_distance > distance)
-	{
-		for (float i = inT; i > 0; i -= 0.0001)
-		{
-			post = m_road->calcPoint(i);
-			pred_position_distance = space(pred_position, post);
-			if (pred_position_distance <= distance) //Checking the "distance traveled" for the required offset
-			{
-				inT = i;
-				i = -1;  //forced exit from the loop
-			}
-		}
-	}
-	else if (pred_position_distance < distance) 
-	{
-		for (float i = inT; i < tmax; i += 0.0001)
-		{
-			post = m_road->calcPoint(i);
-			pred_position_distance = space(pred_position, post);
-			if (pred_position_distance >= distance) //Checking the "distance traveled" for the required offset
-			{
-				inT = i;
-				i = tmax + 1;  //forced exit from the loop
-			}
-		}
-	}
-
-	return inT;
-
+	return m_splinePosition;
 }
 
-bool PosOnRoad::isEndRoads(float inT) const
+vec3 const& PosOnRoad::getNewPos(float splinePos) const
+{	
+	return m_road->calcPoint( splinePos) + vec3(0,0,1);
+}
+
+vec3 const& PosOnRoad::getNewDir(float splinePos) const
 {
-	if (inT >= m_segmentCount - 0.1 || inT == 0)
+	return m_road->calcTangent( splinePos);
+}
+
+vec3 const& PosOnRoad::getNewUpVec(float splinePos) const
+{
+	return m_road->calcUpVector( splinePos);
+}
+
+float PosOnRoad::addOffset(float offset, Math::vec3 const& predPosition, float distance, float inSplinePos) const
+{
+	float dist = 0;
+	float tmax = m_road->getSegmentCount();
+	vec3 pos = m_road->calcPoint(inSplinePos);
+	for (float i = inSplinePos; i < tmax; i += 0.0001)
+	{
+		vec3 post = m_road->calcPoint(i);
+		dist += space(post, pos);
+
+		pos = post;
+		//Checking the "distance traveled" for the required offset
+		if (dist >= offset)
+		{
+			inSplinePos = i;
+			//forced exit from the loop
+			i = tmax + 1;
+		}
+	}
+	float predPositionDistance = space(predPosition, pos);
+	if (distance > 0 && !approximate(predPositionDistance, 0.05f, distance))
+	{
+		inSplinePos = correct(predPositionDistance, distance, predPosition, inSplinePos);
+	}
+	return inSplinePos;
+}
+
+float PosOnRoad::space(Vec3 const& point0, Vec3 const& point1) const
+{
+	float newX = point0.x - point1.x;
+	float newY = point0.y - point1.y;
+	return Math::fsqrt(newX * newX + newY * newY);
+}
+
+bool PosOnRoad::isEndRoads(float inSplinePos) const
+{
+	if (inSplinePos >= m_segmentCount - 0.1 || inSplinePos == 0)
 	{
 		return true;
 	}
 	return false;
 }
 
-float PosOnRoad::addOffset(float offset, Math::vec3 const& pred_position, float distance, float inT)
-{
-	float dist = 0;
-	float tmax = m_road->getSegmentCount();
-	vec3 pos = m_road->calcPoint(inT);
-	for (float i = inT; i < tmax; i += 0.0001)
-	{
-		vec3 post = m_road->calcPoint(i);
-		dist += space(post, pos);
-		
-		pos = post;
-		if (dist >= offset) //Checking the "distance traveled" for the required offset
-		{
-			inT = i;
-			i = tmax + 1; //forced exit from the loop
-		}
-	}
-	float pred_position_distance = space(pred_position, pos);
-	if ( distance > 0 && !approximate(pred_position_distance, 0.05f, distance))
-	{
-		inT = correct(pred_position_distance, distance, pred_position, inT);
-	}
-	return inT;
-}
-
-bool PosOnRoad::approximate(float value, float inaccuracy, float reference_distance)
+bool PosOnRoad::approximate(float value, float inaccuracy, float referenceDistance) const
 {
 	bool returned = false;
-	if (reference_distance < 0 || (value <= reference_distance + inaccuracy && value >=  reference_distance - inaccuracy))
+	if (referenceDistance < 0 || (value <= referenceDistance + inaccuracy && value >= referenceDistance - inaccuracy))
 	{
 		returned = true;
 	}
-		return returned;
+	return returned;
 }
 
-vec3 const& PosOnRoad::getNewPos(float t)
-{	
-	return m_road->calcPoint(t) + vec3(0,0,1);
-}
-
-vec3 const& PosOnRoad::getNewDir(float t)
+float PosOnRoad::correct(float predPositionDistance, float distance, vec3 const& predPosition, float inSplinePos) const
 {
-	return m_road->calcTangent(t);
-}
+	float tmax = m_road->getSegmentCount();
+	vec3 post = m_road->calcPoint(inSplinePos);
+	if (predPositionDistance > distance)
+	{
+		for (float i = inSplinePos; i > 0; i -= 0.0001)
+		{
+			post = m_road->calcPoint(i);
+			predPositionDistance = space(predPosition, post);
+			//Checking the "distance traveled" for the required offset
+			if (predPositionDistance <= distance)
+			{
+				inSplinePos = i;
+				//forced exit from the loop
+				i = -1;
+			}
+		}
+	}
+	else if (predPositionDistance < distance)
+	{
+		for (float i = inSplinePos; i < tmax; i += 0.0001)
+		{
+			post = m_road->calcPoint(i);
+			predPositionDistance = space(predPosition, post);
+			//Checking the "distance traveled" for the required offset
+			if (predPositionDistance >= distance)
+			{
+				inSplinePos = i;
+				//forced exit from the loop
+				i = tmax + 1;
+			}
+		}
+	}
 
-vec3 const& PosOnRoad::getNewUpVec(float t)
-{
-	return m_road->calcUpVector(t);
-}
+	return inSplinePos;
 
-float PosOnRoad::space(Vec3 const& point_0, Vec3 const& point_1)
-{
-	float newX = point_0.x - point_1.x;
-	float newY = point_0.y - point_1.y;
-	return Math::fsqrt(newX * newX + newY * newY);
 }

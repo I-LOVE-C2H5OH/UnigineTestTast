@@ -38,14 +38,14 @@ GPU:	NVIDIA GRID K280Q
 Loading "FbxImporter_x64d.dll"...
 Loading "GLTFImporter_x64d.dll"...
 Loading "FbxExporter_x64d.dll"...
-Plugins initialization: 4ms
+Plugins initialization: 3ms
 
 
 ---- Application ----
 Loading "dxgi.dll"...
 Loading "openal32.dll"...
 Set 860x560 fullwindow video mode
-Application initialization: 315ms
+Application initialization: 263ms
 
 
 
@@ -61,8 +61,8 @@ Data path: E:/unigine_project/unigine_project/data/
 Save path: E:/unigine_project/unigine_project/bin/
 WARNING:	FileSystemCore::mount_file(): can't mount "test/NodeDummy_1.node" file, because of GUID collision
 
-Runtimes loaded: 6 2ms
-Filesystem initialization: 556ms
+Runtimes loaded: 6 3ms
+Filesystem initialization: 507ms
 
 ---- Sound ----
 Renderer: OpenAL Soft on Удаленное аудио
@@ -127,7 +127,7 @@ Processor registered "CloseAnimation".
 Importer registered "GLTFImporter".
 Exporter registered "FbxExporter".
 Set 960x540 windowed video mode
-Engine initialization: 1834ms
+Engine initialization: 1785ms
 
 
 ---- Interpreter ----
@@ -136,10 +136,10 @@ Version: 2.90
 Unigine~# config_autosave 0 && world_load "unigine_project"
 Script loading "core/unigine.usc" 8ms
 Loading "core/locale/unigine.locale" dictionary 1ms
-World loading "unigine_project.world" 343ms
+World loading "unigine_project.world" 350ms
 
 ---- Load cache textures ----
-Cache textures loaded 311 (80ms)
+Cache textures loaded 311 (82ms)
 
 Exporter unregistered "FbxExporter".
 Importer unregistered "GLTFImporter".
@@ -158,9 +158,9 @@ Total RAM:           9.7 MB
 - system RAM used:   2.4 MB
 - pool RAM reserved: 7.3 MB
 - pool RAM used:     2.0 MB
-Total allocs:        132130
-- system allocs:     638
-- 16b pool allocs:   131266
+Total allocs:        132132
+- system allocs:     641
+- 16b pool allocs:   131265
 - 32b pool allocs:   195
 - 64b pool allocs:   31
 
