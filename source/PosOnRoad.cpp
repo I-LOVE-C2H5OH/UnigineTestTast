@@ -49,7 +49,8 @@ vec3 const& PosOnRoad::getNewUpVec(float splinePos) const
 	return m_road->calcUpVector( splinePos);
 }
 
-float PosOnRoad::addOffset(float offset, Math::vec3 const& predPosition, float distance, float inSplinePos) const
+float PosOnRoad::addOffset(float offset, Math::vec3 const& predPosition, float distance, 
+	float inSplinePos) const
 {
 	float dist = 0;
 	const float maxStartSplinePos = m_road->getSegmentCount();
@@ -95,14 +96,16 @@ bool PosOnRoad::isEndRoads(float inSplinePos) const
 bool PosOnRoad::approximate(float value, float inaccuracy, float referenceDistance) const
 {
 	bool returned = false;
-	if (referenceDistance < 0 || (value <= referenceDistance + inaccuracy && value >= referenceDistance - inaccuracy))
+	if (referenceDistance < 0 || (value <= referenceDistance + inaccuracy && 
+		value >= referenceDistance - inaccuracy))
 	{
 		returned = true;
 	}
 	return returned;
 }
 
-float PosOnRoad::correct(float predPositionDistance, float distance, vec3 const& predPosition, float inSplinePos) const
+float PosOnRoad::correct(float predPositionDistance, float distance, vec3 const& predPosition, 
+	float inSplinePos) const
 {
 	const float maxStartSplinePos = m_road->getSegmentCount();
 	vec3 post = m_road->calcPoint(inSplinePos);

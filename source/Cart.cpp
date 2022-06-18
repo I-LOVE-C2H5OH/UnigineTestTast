@@ -4,9 +4,9 @@ using namespace Unigine;
 using namespace std;
 using namespace Unigine::Math;
 
-Cart::Cart(NodePtr const& bogieFront, NodePtr const& bogieBack, NodePtr Upper,
+Cart::Cart(NodePtr const& bogieFront, NodePtr const& bogieBack, NodePtr const& upper,
 	std::shared_ptr<Road> const& road, float speed, int position)
-	:m_upper(Upper),
+	:m_upper(upper),
 	m_speed(speed)
 {
 	const float cartLength = 7.0f;
@@ -17,11 +17,9 @@ Cart::Cart(NodePtr const& bogieFront, NodePtr const& bogieBack, NodePtr Upper,
 		distanceBetweenBages);
 	const vec3 bogieFrontPos(m_bogieFront->getPosition());
 	const vec3 bogieBackPos(m_bogieBack->getPosition());
-	m_upper->setPosition(centerPoint(bogieFrontPos,
-		bogieBackPos));
-
-	m_upper->setRotation(quat(0, 0, 90 +
-		angleBetweenBogiesDegrees(bogieFrontPos, bogieBackPos)));
+	m_upper->setPosition(centerPoint(bogieFrontPos, bogieBackPos));
+	const quat rotWorldUpper(0, 0, 90 + angleBetweenBogiesDegrees(bogieFrontPos, bogieBackPos));
+	m_upper->setRotation(rotWorldUpper);
 }
 
 int Cart::update(Math::vec3 const& pos, float distance)
@@ -32,8 +30,9 @@ int Cart::update(Math::vec3 const& pos, float distance)
 	const vec3 bogieFrontPos(m_bogieFront->getPosition());
 	const vec3 bogieBackPos(m_bogieBack->getPosition());
 	const vec3 posWorldUpper(centerPoint(bogieFrontPos, bogieBackPos));
-	const vec3 rotWorldUpper(0, 0, 90 + angleBetweenBogiesDegrees(bogieFrontPos, bogieBackPos));
+	const quat rotWorldUpper(0, 0, 90 + angleBetweenBogiesDegrees(bogieFrontPos, bogieBackPos));
 	m_upper->setWorldPosition(posWorldUpper);
+	m_upper->setWorldRotation(rotWorldUpper);
 	return 0;
 }
 

@@ -15,7 +15,7 @@ class Cart
 {
 public:
 	Cart(Unigine::NodePtr const& bogieFront, Unigine::NodePtr const& bogieBack, 
-		Unigine::NodePtr Upper, std::shared_ptr<Road> const& road, float speed, int position);
+		Unigine::NodePtr const& upper, std::shared_ptr<Road> const& road, float speed, int position);
 	int update(Unigine::Math::vec3 const& pos, float distance);
 	void speedAdd(float speedAdding);
 	Unigine::NodePtr const& getNodeForCamera() const;
