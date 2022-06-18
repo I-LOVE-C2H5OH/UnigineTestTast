@@ -14,7 +14,7 @@ PosOnRoad::PosOnRoad(std::shared_ptr<Road> road, float distance)
 void PosOnRoad::calcInit(float distance)
 {
 	float dist = 0;
-	float tmax = m_road->getSegmentCount();
+	const float tmax = m_road->getSegmentCount();
 	vec3 pos = m_road->calcPoint(0);
 	for (float i = 0.0f; i < tmax; i += 0.0001)
 	{
@@ -27,7 +27,6 @@ void PosOnRoad::calcInit(float distance)
 			i = tmax + 1;
 		}
 	}
-
 }
 
 float PosOnRoad::getStartSplinePos() const
@@ -53,7 +52,7 @@ vec3 const& PosOnRoad::getNewUpVec(float splinePos) const
 float PosOnRoad::addOffset(float offset, Math::vec3 const& predPosition, float distance, float inSplinePos) const
 {
 	float dist = 0;
-	float tmax = m_road->getSegmentCount();
+	const float tmax = m_road->getSegmentCount();
 	vec3 pos = m_road->calcPoint(inSplinePos);
 	for (float i = inSplinePos; i < tmax; i += 0.0001)
 	{
@@ -79,8 +78,8 @@ float PosOnRoad::addOffset(float offset, Math::vec3 const& predPosition, float d
 
 float PosOnRoad::space(Vec3 const& point0, Vec3 const& point1) const
 {
-	float newX = point0.x - point1.x;
-	float newY = point0.y - point1.y;
+	const float newX = point0.x - point1.x;
+	const float newY = point0.y - point1.y;
 	return Math::fsqrt(newX * newX + newY * newY);
 }
 
@@ -105,7 +104,7 @@ bool PosOnRoad::approximate(float value, float inaccuracy, float referenceDistan
 
 float PosOnRoad::correct(float predPositionDistance, float distance, vec3 const& predPosition, float inSplinePos) const
 {
-	float tmax = m_road->getSegmentCount();
+	const float tmax = m_road->getSegmentCount();
 	vec3 post = m_road->calcPoint(inSplinePos);
 	if (predPositionDistance > distance)
 	{
@@ -139,5 +138,4 @@ float PosOnRoad::correct(float predPositionDistance, float distance, vec3 const&
 	}
 
 	return inSplinePos;
-
 }

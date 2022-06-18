@@ -26,7 +26,7 @@ Train::Train(std::shared_ptr<Road> const& road, float speed, vector<CartType> co
 
 void Train::update()
 {
-	int lastCart = m_carts.size() - 1;
+	const int lastCart = m_carts.size() - 1;
 	if (!m_carts[lastCart].isEndRoads())
 	{
 		m_carts[0].update(vec3(0, 0, 0), -1);
@@ -41,8 +41,7 @@ void Train::update()
 
 void Train::speedAdd(float speedAdding) 
 {
-	
-	if (!((m_speed >= 0.5 && speedAdding > 0) || (m_speed < 0.0005 && speedAdding <0)))
+	if (!((m_speed >= 0.5 && speedAdding > 0) || (m_speed < 0.0005 && speedAdding < 0)))
 	{
 		m_speed += speedAdding;
 		for (int i = 0; i < m_carts.size(); i++)
@@ -54,7 +53,7 @@ void Train::speedAdd(float speedAdding)
 
 NodePtr Train::getNodeForCamera() const
 {
-	int size = m_carts.size() - 1;
+	const int size = m_carts.size() - 1;
 	return m_carts[size].getNodeForCamera();
 }
 

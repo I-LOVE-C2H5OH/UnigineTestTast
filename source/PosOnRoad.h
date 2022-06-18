@@ -18,7 +18,7 @@ public:
 	PosOnRoad(std::shared_ptr<Road> road, float distance);
 
 	/**
-	* calculates the initial splinePos at which the distance from the beginning of the spline will be equal to the input value
+	* Calculates the initial splinePos at which the distance from the beginning of the spline will be equal to the input value.
 	*/
 	void calcInit(float distance);
 	float getStartSplinePos() const;
@@ -29,14 +29,14 @@ public:
 		float distance, float inSplinePos) const;
 
 	/**
-	* calculates the distance between points on the XY axis
+	* Calculates the distance between points on the XY axis.
 	*/
 	float space(Unigine::Math::Vec3 const& pointOne, Unigine::Math::Vec3 const& pointTwo) const;
 	bool isEndRoads(float inSplinePos) const;
 private:
 
 	/**
-	* checking for the maximum margin of error inaccuracy.
+	* Checking for the maximum margin of error inaccuracy.
 	*/
 	bool approximate(float value, float inaccuracy, float referenceDistance) const;
 	
@@ -44,7 +44,7 @@ private:
 		Unigine::Math::vec3 const& predPosition, float inSplinePos) const;
 
 	/**
-	* splinePos - position on spline 0<t<CountSegment
+	* SplinePos - position on spline 0<t<CountSegment.
 	*/
 	float m_splinePosition = 0;
 	std::shared_ptr<Road> m_road;

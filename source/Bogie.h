@@ -20,8 +20,9 @@ public:
 private:
 	void setPosAndUpvecAndDir();
 	void wheelRotation(float offset);
+
 	/**
-	 * position on spline 0 < splinePos < CountSegment Taken from Unugine doc.
+	 * Position on spline 0 < splinePos < CountSegment Taken from Unugine doc.
 	 */
 	float m_splinePosition = 0; 
 	float m_distance = 0;

@@ -17,35 +17,36 @@ public:
 	Cart(Unigine::NodePtr const& bogieFront, Unigine::NodePtr const& bogieBack, 
 		Unigine::NodePtr Upper, std::shared_ptr<Road> const& road, float speed, int position);
 	int update(Unigine::Math::vec3 const& pos, float distance);
-	Unigine::NodePtr const& getNodeForCamera() const;
 	void speedAdd(float speedAdding);
+	Unigine::NodePtr const& getNodeForCamera() const;
 	float getSpeed() const;
 	bool isEndRoads() const;
-	Unigine::Math::vec3 const& getFrontBogie();
+	Unigine::Math::vec3 const& getFrontBogie() const;
 	
 private:
 
 	/**
-	* calculates the distance between points on the XY axis.
+	* Calculates the distance between points on the XY axis.
 	*/
-	float space(Unigine::Math::vec3 const& pointOne, Unigine::Math::vec3 const& pointTwo); 
+	float space(Unigine::Math::vec3 const& pointOne, Unigine::Math::vec3 const& pointTwo) const; 
 
 	/**
-	* calculates the centerPoint between points on the XY axis.
+	* Calculates the centerPoint between points on the XY axis.
 	*/
-	Unigine::Math::vec3 centerPoint(Unigine::Math::vec3 point1,
-		Unigine::Math::vec3 point2);
+	Unigine::Math::vec3 const& centerPoint(Unigine::Math::vec3 const& point1,
+		Unigine::Math::vec3 const& point2) const;
 
 	/**
-	* calculates the Angle between points on the XY axis.
+	* Calculates the Angle between points on the XY axis.
 	*/
-	float getAngleBetweenBogies(Unigine::Math::vec3 front, Unigine::Math::vec3 back); 
+	float angleBetweenBogiesDegrees(Unigine::Math::vec3 const& front, 
+		Unigine::Math::vec3 const& back) const;
 	float m_speed = 0;
 	std::shared_ptr<Bogie> m_bogieFront;
 	std::shared_ptr<Bogie> m_bogieBack;
 
 	/*
-	* node platformand top
+	* Node platformand top.
 	*/
 	Unigine::NodePtr m_upper; 
 };

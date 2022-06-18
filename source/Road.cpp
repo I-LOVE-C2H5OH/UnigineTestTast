@@ -22,21 +22,21 @@ Road::Road(WorldSplineGraphPtr const& road)
 
 Vec3 Road::calcPoint(float splinePos) const
 {
-	int segment = splinePos;
+	const  int segment = splinePos;
 	splinePos -= segment;
 	return m_roadSegments [segment]->calcPoint(splinePos) + m_road->getWorldPosition();
 }
 
 Vec3 Road::calcTangent(float splinePos) const
 {
-	int segment = splinePos;
+	const int segment = splinePos;
 	splinePos -= segment;
 	return m_roadSegments [segment]->calcTangent((splinePos));
 }
 
 Vec3 Road::calcUpVector(float splinePos) const
 {
-	int segment = splinePos;
+	const int segment = splinePos;
 	splinePos -= segment;
 	return m_roadSegments [segment]->calcUpVector(splinePos);
 }

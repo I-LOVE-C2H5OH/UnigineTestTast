@@ -9,7 +9,6 @@
 
 #include <vector>
 
-
 class Train 
 {
 public:

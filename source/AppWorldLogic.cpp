@@ -35,7 +35,7 @@ AppWorldLogic::~AppWorldLogic()
 
 int AppWorldLogic::init()
 {	
-	m_camera_actor = checked_ptr_cast<Player>(World::getNodeByName("main_player"));
+	m_actorCamera = checked_ptr_cast<Player>(World::getNodeByName("main_player"));
 	m_splinePositionrainCamera = PlayerDummy::create();
 	m_splinePositionrainCamera->setWorldRotation(quat(0,0,0));
 	WorldSplineGraphPtr WorldSplineGraphPlayer = WorldSplineGraph::create();
@@ -47,12 +47,12 @@ int AppWorldLogic::init()
 	
 	m_roads.push_back(make_shared<Road>(Road(WorldSplineGraphPlayer)));
 	m_roads.push_back((make_shared<Road>(WorldSplineGraphNPC)));;
-	vector<CartType> carts_types_NPC;
-	carts_types_NPC.push_back(CartType::Barrel);
-	carts_types_NPC.push_back(CartType::Van);
-	carts_types_NPC.push_back(CartType::Barrel);
-	m_playerTrain = make_unique<Train> (Train((m_roads[0]), 5, carts_types_NPC));
-	m_npcTrain = make_unique<Train> ((m_roads[1]), 5, carts_types_NPC);
+	vector<CartType> npcCartTypes;
+	npcCartTypes.push_back(CartType::Barrel);
+	npcCartTypes.push_back(CartType::Van);
+	npcCartTypes.push_back(CartType::Barrel);
+	m_playerTrain = make_unique<Train> (Train((m_roads[0]), 5, npcCartTypes));
+	m_npcTrain = make_unique<Train> ((m_roads[1]), 5, npcCartTypes);
 	m_playerTrain->getNodeForCamera()->addChild(m_splinePositionrainCamera);
 	m_splinePositionrainCamera->setPosition(Vec3(0, 0, 3));
 	m_splinePositionrainCamera->rotate(90, 180, 0);
@@ -89,7 +89,7 @@ int AppWorldLogic::update()
 
 	if (Input::isKeyPressed(Input::KEY_F3))
 	{
-		Game::setPlayer(m_camera_actor);
+		Game::setPlayer(m_actorCamera);
 	}
 	return 1;
 }

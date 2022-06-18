@@ -28,14 +28,11 @@
 #include <vector>
 #include <memory>
 
-
-
 class AppWorldLogic : public Unigine::WorldLogic
 {
 public:
 	AppWorldLogic();
 	virtual ~AppWorldLogic();
-
 	int init() override;
 	int update() override;
 	int postUpdate() override;
@@ -49,7 +46,7 @@ public:
 private:
 	std::vector<std::shared_ptr<Road>> m_roads;
 	Unigine::ControlsPtr m_controls;
-	Unigine::PlayerPtr m_camera_actor;
+	Unigine::PlayerPtr m_actorCamera;
 	Unigine::PlayerDummyPtr m_splinePositionrainCamera;
 	std::unique_ptr<Train> m_npcTrain;
 	std::unique_ptr<Train> m_playerTrain;

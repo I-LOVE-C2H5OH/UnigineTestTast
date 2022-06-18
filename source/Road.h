@@ -12,14 +12,13 @@
 #include <vector>
 #include <memory>
 
-
 class Road 
 {
 public:
 	Road(Unigine::WorldSplineGraphPtr const& road);
 
 	/**
-	* splinePos - position on spline 0 < splinePos < CountSegment Taken from Unugine doc
+	* SplinePos - position on spline 0 < splinePos < CountSegment Taken from Unugine doc.
 	*/
 	Unigine::Math::Vec3 calcPoint(float splinePos) const;
 	Unigine::Math::Vec3 calcTangent(float splinePos) const;
