@@ -14,7 +14,6 @@ class Bogie
 {
 public:
 	Bogie(Unigine::NodePtr const& bogie, std::shared_ptr<Road> road, float nullDistance);
-	void distanceAdd(float frameSpeed);
 	void distanceAdd(float frameSpeed, Unigine::Math::vec3 const& pos, float distance);
 	Unigine::Math::vec3 const& getPosition();
 	bool isEndRoads();

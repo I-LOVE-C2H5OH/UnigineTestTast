@@ -54,7 +54,7 @@ void Train::update()
 	int lastCart = m_Carts.size() - 1;
 	if (!m_Carts[lastCart].isEndRoads())
 	{
-		m_Carts[0].update();
+		m_Carts[0].update(vec3(0,0,0), -1);
 		vec3 reference = m_Carts[0].getFrontBogie();
 		for (int i = 1; i < m_Carts.size(); i++)
 		{

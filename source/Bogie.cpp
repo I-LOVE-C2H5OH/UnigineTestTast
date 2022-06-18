@@ -35,14 +35,6 @@ bool Bogie::isEndRoads()
 {
 	return m_road->isEndRoads(m_t);
 }
-void Bogie::distanceAdd(float frameSpeed)
-{
-	m_distance += frameSpeed;
-	m_t = m_road->addOffset(frameSpeed, m_t);
-	setPosAndUpvecAndDir();
-
-	wheelRotation(frameSpeed);
-}
 
 void Bogie::distanceAdd(float frameSpeed, vec3 const& previous, float distance)
 {

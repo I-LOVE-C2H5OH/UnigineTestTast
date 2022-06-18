@@ -20,7 +20,6 @@ public:
 	float getStart_t() const;
 	Unigine::Math::vec3 const& getNewDir(float t);
 	Unigine::Math::vec3 const& getNewUpVec(float t);
-	float addOffset(float offset, float inT);
 	float addOffset(float offset, Unigine::Math::vec3 const& initialPosition, 
 		float distance, float inT);
 	float space(Unigine::Math::Vec3 const& pointOne, Unigine::Math::Vec3 const& pointTwo); 

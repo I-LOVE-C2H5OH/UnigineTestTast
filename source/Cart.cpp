@@ -70,22 +70,6 @@ int Cart::update(Math::vec3 const& pos, float distance)
 	return 0;
 }
 
-int Cart::update()
-{
-	float speed = m_speed * Game::getIFps();
-
-	m_bogieBack->distanceAdd(speed);
-	m_bogieFront->distanceAdd(speed);
-
-	m_upper->setPosition(centerPoint(m_bogieBack->getPosition(), m_bogieFront->getPosition()));
-
-	m_upper->setRotation(quat(0, 0, 90 +
-		getAngleBetweenBogies(m_bogieFront->getPosition(), m_bogieBack->getPosition())));
-	return 1;
-}
-
-
-
 vec3 const& Cart::getFrontBogie()
 {
 	return m_bogieFront->getPosition();

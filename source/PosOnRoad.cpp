@@ -96,7 +96,7 @@ float PosOnRoad::addOffset(float offset, Math::vec3 const& pred_position, float 
 		}
 	}
 	float pred_position_distance = space(pred_position, pos);
-	if (!approximate(pred_position_distance, 0.05f, distance))
+	if ( distance > 0 && !approximate(pred_position_distance, 0.05f, distance))
 	{
 		inT = correct(pred_position_distance, distance, pred_position, inT);
 	}
@@ -112,27 +112,6 @@ bool PosOnRoad::approximate(float value, float inaccuracy, float reference_dista
 	}
 		return returned;
 }
-
-float PosOnRoad::addOffset(float offset, float inT)
-{
-	float dist = 0;
-	float tmax = m_road->getSegmentCount();
-	vec3 pos = m_road->calcPoint(inT);
-	for (float i = inT; i < tmax; i += 0.0001)
-	{
-		vec3 post = m_road->calcPoint(i);
-		dist += space(post, pos);
-		pos = post;
-		if (dist >= offset) //Checking the "distance traveled" for the required offset
-		{
-			inT = i;
-			i = tmax + 1;  //forced exit from the loop
-		}
-	}
-	return inT;
-}
-
-
 
 vec3 const& PosOnRoad::getNewPos(float t)
 {	
