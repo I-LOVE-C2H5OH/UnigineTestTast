@@ -11,8 +11,6 @@
  * UNIGINE. at http://unigine.com/
  */
 
-
-
 #include "AppWorldLogic.h"
 
 #include <random>

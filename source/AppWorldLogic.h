@@ -11,22 +11,23 @@
  * UNIGINE. at http://unigine.com/
  */
 
-
 #ifndef __APP_WORLD_LOGIC_H__
 #define __APP_WORLD_LOGIC_H__
 
 #include <UnigineLogic.h>
 #include <UnigineStreams.h>
+
 #include <UnigineWorlds.h>
-
 #include <UnigineWorld.h>
-#include <UnigineGame.h>
 
+#include <UnigineGame.h>
 #include <UniginePlayers.h>
+
 #include <UnigineInput.h>
 #include "Train.h"
-#include <vector>
+
 #include <memory>
+#include <vector>
 
 class AppWorldLogic : public Unigine::WorldLogic
 {

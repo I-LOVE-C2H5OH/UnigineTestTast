@@ -44,7 +44,8 @@ void Bogie::setPosAndUpvecAndDir()
 
 void Bogie::wheelRotation(float offset)
 {
-	const float angle = (180 * offset) / (Consts::PI * 1.5f);
+	const float wheelDiametr = 1.5f;
+	const float angle = (180 * offset) / (Consts::PI * wheelDiametr);
 	m_bogieNode->findNode("front_axle")->rotate(-angle, 0, 0);
 	m_bogieNode->findNode("back_axle")->rotate(-angle, 0, 0);
 }
