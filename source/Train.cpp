@@ -33,7 +33,9 @@ void Train::update()
 		vec3 reference = m_carts[0].getFrontBogie();
 		for (int i = 1; i < m_carts.size(); i++)
 		{
-			m_carts[i].update(reference, 3.0f);
+			// The distance between the rear bogie of the front cart and the front bogie of the rear cart.
+			float DistBettwenBogies = 3.0f;
+			m_carts[i].update(reference, DistBettwenBogies);
 			reference = m_carts[i].getFrontBogie();
 		}
 	}
