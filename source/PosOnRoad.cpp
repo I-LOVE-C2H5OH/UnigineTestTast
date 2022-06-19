@@ -139,6 +139,5 @@ float PosOnRoad::correct(float predPositionDistance, float distance, vec3 const&
 			}
 		}
 	}
-
 	return inSplinePos;
 }

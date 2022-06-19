@@ -1,6 +1,3 @@
-
-
-
 enum CartType
 {
 	Barrel = 0,

@@ -17,7 +17,6 @@
 
 #include <random>
 
-
 using namespace Unigine;
 using namespace std;
 using namespace Unigine::Math;
@@ -77,16 +76,15 @@ int AppWorldLogic::update()
 	{
 		m_playerTrain->speedAdd(0.0005);
 	}
+
 	if (Input::isKeyPressed(Input::KEY_DOWN))
 	{
 		m_playerTrain->speedAdd(-0.0005);
 	}
-
 	if (Input::isKeyPressed(Input::KEY_F2))
 	{
 		Game::setPlayer(m_splinePositionrainCamera);
 	}
-
 	if (Input::isKeyPressed(Input::KEY_F3))
 	{
 		Game::setPlayer(m_actorCamera);
