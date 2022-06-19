@@ -34,8 +34,8 @@ void Train::update()
 		for (int i = 1; i < m_carts.size(); i++)
 		{
 			// The distance between the rear bogie of the front cart and the front bogie of the rear cart.
-			float DistBettwenBogies = 3.0f;
-			m_carts[i].update(reference, DistBettwenBogies);
+			float distBettwenBogies = 3.0f;
+			m_carts[i].update(reference, distBettwenBogies);
 			reference = m_carts[i].getFrontBogie();
 		}
 	}
