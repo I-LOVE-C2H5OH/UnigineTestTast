@@ -22,5 +22,5 @@ public:
 	float getSpeed() const;
 private:
 	float m_speed = 0; 
-	Unigine::Vector<Cart> m_carts;
+	Unigine::Vector<Cart> m_carts;;
 };
